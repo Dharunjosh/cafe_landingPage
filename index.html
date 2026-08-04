@@ -203,7 +203,7 @@
   <div class="wrap">
     <p class="eyebrow">Customer reviews</p>
     <h2>What the regulars say</h2>
-    <div class="review-grid">
+    <div class="review-grid" id="review-grid">
       <div class="review-card">
         <div class="stars" aria-label="5 out of 5 stars">
           <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L1.3 7.2l6.1-.6z"/></svg>
@@ -246,6 +246,42 @@
         </div>
       </div>
     </div>
+
+    <div class="write-review">
+      <div class="form-title">Leave a review</div>
+      <div class="form-sub">Tell other visitors how it went — your review appears below right away.</div>
+      <form id="review-form" novalidate>
+        <div class="form-row">
+          <div><label for="rv-name">Name</label><input id="rv-name" type="text" required></div>
+          <div>
+            <label id="rv-rating-label">Rating</label>
+            <div class="star-input" id="rv-rating" role="radiogroup" aria-labelledby="rv-rating-label" data-value="0">
+              <button type="button" class="star-btn" data-star="1" aria-label="1 star" role="radio" aria-checked="false">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L1.3 7.2l6.1-.6z"/></svg>
+              </button>
+              <button type="button" class="star-btn" data-star="2" aria-label="2 stars" role="radio" aria-checked="false">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L1.3 7.2l6.1-.6z"/></svg>
+              </button>
+              <button type="button" class="star-btn" data-star="3" aria-label="3 stars" role="radio" aria-checked="false">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L1.3 7.2l6.1-.6z"/></svg>
+              </button>
+              <button type="button" class="star-btn" data-star="4" aria-label="4 stars" role="radio" aria-checked="false">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L1.3 7.2l6.1-.6z"/></svg>
+              </button>
+              <button type="button" class="star-btn" data-star="5" aria-label="5 stars" role="radio" aria-checked="false">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L1.3 7.2l6.1-.6z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label for="rv-text">Your review</label>
+          <textarea id="rv-text" required placeholder="What stood out — the ambience, the coffee, the service?"></textarea>
+        </div>
+        <button class="btn btn-primary submit-btn" type="submit">Submit Review</button>
+        <p class="form-status" id="review-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -255,12 +291,12 @@
     <p class="eyebrow">Gallery</p>
     <h2>A look inside</h2>
     <div class="gal-grid">
-      <div class="gal-tile g1"><span>Cozy seating corner</span></div>
-      <div class="gal-tile g2"><span>Fresh bakes on the counter</span></div>
-      <div class="gal-tile g3"><span>Open-air courtyard seating</span></div>
-      <div class="gal-tile g4"><span>Tea cake & masala chai</span></div>
-      <div class="gal-tile g5"><span>The filter kaapi counter</span></div>
-      <div class="gal-tile g6"><span>Evening ambience</span></div>
+      <div class="gal-tile g1" style="background-image:url('https://picsum.photos/seed/hearth-seating/700/700'); background-size:cover; background-position:center;"><span>Cozy seating corner</span></div>
+      <div class="gal-tile g2" style="background-image:url('https://picsum.photos/seed/hearth-bakes/500/350'); background-size:cover; background-position:center;"><span>Fresh bakes on the counter</span></div>
+      <div class="gal-tile g3" style="background-image:url('https://picsum.photos/seed/hearth-courtyard/500/350'); background-size:cover; background-position:center;"><span>Open-air courtyard seating</span></div>
+      <div class="gal-tile g4" style="background-image:url('https://picsum.photos/seed/hearth-teacake/500/350'); background-size:cover; background-position:center;"><span>Tea cake & masala chai</span></div>
+      <div class="gal-tile g5" style="background-image:url('https://picsum.photos/seed/hearth-counter/700/350'); background-size:cover; background-position:center;"><span>The filter kaapi counter</span></div>
+      <div class="gal-tile g6" style="background-image:url('https://picsum.photos/seed/hearth-evening/500/350'); background-size:cover; background-position:center;"><span>Evening ambience</span></div>
     </div>
   </div>
 </section>

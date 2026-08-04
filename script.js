@@ -255,3 +255,92 @@ function wireForm(formId, statusId, successMessage) {
 
 wireForm('reservation-form', 'reservation-status', "Thanks — your table request has been sent, we'll confirm by text shortly.");
 wireForm('contact-form', 'contact-status', "Thanks — we'll get back to you shortly.");
+
+// ---------------------------------------------------------------
+// Customer reviews: lets a visitor pick a star rating, write a
+// review, and submit it. On submit, a new review card is built
+// and prepended to the review grid immediately, so it's visibly
+// "live" on the page.
+//
+// NOTE: this only lives in the browser tab's memory — refreshing
+// the page resets it back to the three original reviews. To make
+// submitted reviews persist for every visitor, they need to be
+// saved somewhere (a small backend + database, or a service like
+// Firebase). Ask if you want help wiring that up.
+// ---------------------------------------------------------------
+(function () {
+  const starWrap = document.getElementById('rv-rating');
+  const form = document.getElementById('review-form');
+  const status = document.getElementById('review-status');
+  const grid = document.getElementById('review-grid');
+  if (!starWrap || !form || !grid) return;
+
+  const starButtons = Array.from(starWrap.querySelectorAll('.star-btn'));
+
+  function setRating(value) {
+    starWrap.setAttribute('data-value', String(value));
+    starButtons.forEach((btn) => {
+      const starValue = Number(btn.getAttribute('data-star'));
+      const isFilled = starValue <= value;
+      btn.classList.toggle('filled', isFilled);
+      btn.setAttribute('aria-checked', String(starValue === value));
+    });
+  }
+
+  starButtons.forEach((btn) => {
+    btn.addEventListener('click', () => setRating(Number(btn.getAttribute('data-star'))));
+  });
+
+  function starsSvgMarkup(count) {
+    const single = '<svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L1.3 7.2l6.1-.6z"/></svg>';
+    return single.repeat(count);
+  }
+
+  function initials(name) {
+    return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const nameField = document.getElementById('rv-name');
+    const textField = document.getElementById('rv-text');
+    const rating = Number(starWrap.getAttribute('data-value'));
+
+    const nameEmpty = !nameField.value.trim();
+    const textEmpty = !textField.value.trim();
+    const ratingMissing = rating < 1;
+
+    nameField.classList.toggle('field-error', nameEmpty);
+    textField.classList.toggle('field-error', textEmpty);
+    starWrap.classList.toggle('field-error', ratingMissing);
+
+    if (nameEmpty || textEmpty || ratingMissing) {
+      status.textContent = 'Please add your name, a star rating, and a short review.';
+      status.className = 'form-status error';
+      return;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'review-card new-review';
+    card.innerHTML = `
+      <div class="stars" aria-label="${rating} out of 5 stars">${starsSvgMarkup(rating)}</div>
+      <p></p>
+      <div class="review-who">
+        <div class="avatar"></div>
+        <div><div class="who-name"></div><div class="who-meta">Just now</div></div>
+      </div>
+    `;
+    card.querySelector('p').textContent = textField.value.trim();
+    card.querySelector('.avatar').textContent = initials(nameField.value);
+    card.querySelector('.who-name').textContent = nameField.value.trim();
+
+    grid.insertBefore(card, grid.firstChild);
+
+    status.textContent = 'Thanks for the review — it now appears above.';
+    status.className = 'form-status success';
+
+    form.reset();
+    setRating(0);
+  });
+})();
