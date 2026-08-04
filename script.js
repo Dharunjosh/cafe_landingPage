@@ -78,3 +78,4 @@
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll(); // set initial state on load
+})();
